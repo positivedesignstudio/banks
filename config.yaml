@@ -47,13 +47,18 @@ regions:
 # SOURCES
 # ------------------------------------------------------------------
 sources:
-
   # 1. AusTender - federal open data API (JSON). No login needed.
-  #    Docs: https://www.tenders.gov.au/api/
+  #    DISABLED: this API only returns already-AWARDED Contract Notices
+  #    (OCDS "findByDates" endpoint), not open Approach-to-Market tenders
+  #    you could bid on. Not useful as a live-lead source. Could be
+  #    repurposed later for competitor / contract-award tracking.
+  #    Docs: https://app.swaggerhub.com/apis/austender/ocds-api/1.1
+  #    Correct path format if re-enabled: /ocds/findByDates/{dateType}/{start}/{end}
+  #    where dateType is one of: contractPublished, contractLastModified,
+  #    contractStart, contractEnd.
   austender:
-    enabled: true
-    # ATM = Approach to Market (open tenders). Pulls recent published ATMs.
-    api_url: "https://api.tenders.gov.au/ocds/findByDates/atm/"
+    enabled: false
+    api_url: "https://api.tenders.gov.au/ocds/findByDates/contractPublished/"
 
   # 2. RSS / Atom feeds. Register on each portal, grab your filtered
   #    feed URL, and paste it in here. These are placeholders.
@@ -63,6 +68,7 @@ sources:
       # Tenders VIC: create a saved search, then copy its RSS URL here.
       - name: "Tenders VIC - Civil/Water"
         url: "REPLACE_WITH_YOUR_TENDERS_VIC_RSS_URL"
+
       # Example council / VendorPanel RSS (if offered):
       - name: "Example Council"
         url: "REPLACE_WITH_COUNCIL_RSS_URL"

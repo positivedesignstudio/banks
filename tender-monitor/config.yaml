@@ -1,0 +1,85 @@
+# ------------------------------------------------------------------
+# Tender Monitor config for Banks Constructions
+# Edit keywords / sources here. No code changes needed.
+# ------------------------------------------------------------------
+
+# A tender is flagged as a MATCH if its title or description contains
+# ANY of these terms (case-insensitive). Keep them broad-ish.
+keywords:
+  - "civil plumbing"
+  - "plumbing"
+  - "stormwater"
+  - "storm water"
+  - "drainage"
+  - "sewer"
+  - "sewerage"
+  - "rising main"
+  - "water main"
+  - "watermain"
+  - "reticulation"
+  - "pipeline"
+  - "pipe laying"
+  - "civil water"
+  - "water management"
+  - "detention basin"
+  - "retention basin"
+  - "wsud"                 # water sensitive urban design
+  - "sewer main"
+  - "trunk main"
+  - "pump station"
+  - "pit and pipe"
+
+# Only keep matches whose region/location text hits one of these
+# (leave empty [] to keep everything the keyword filter returns).
+regions:
+  - "victoria"
+  - "vic"
+  - "melbourne"
+  - "geelong"
+  - "ballarat"
+  - "bendigo"
+  - "wyndham"
+  - "casey"
+  - "melton"
+  - "whittlesea"
+
+# ------------------------------------------------------------------
+# SOURCES
+# ------------------------------------------------------------------
+sources:
+
+  # 1. AusTender - federal open data API (JSON). No login needed.
+  #    Docs: https://www.tenders.gov.au/api/
+  austender:
+    enabled: true
+    # ATM = Approach to Market (open tenders). Pulls recent published ATMs.
+    api_url: "https://api.tenders.gov.au/ocds/findByDates/atm/"
+
+  # 2. RSS / Atom feeds. Register on each portal, grab your filtered
+  #    feed URL, and paste it in here. These are placeholders.
+  rss_feeds:
+    enabled: true
+    feeds:
+      # Tenders VIC: create a saved search, then copy its RSS URL here.
+      - name: "Tenders VIC - Civil/Water"
+        url: "REPLACE_WITH_YOUR_TENDERS_VIC_RSS_URL"
+      # Example council / VendorPanel RSS (if offered):
+      - name: "Example Council"
+        url: "REPLACE_WITH_COUNCIL_RSS_URL"
+
+  # 3. Plain HTML listing pages that ALLOW polling (check robots.txt).
+  #    Only add pages you're permitted to read. Uses a polite delay.
+  html_pages:
+    enabled: false
+    request_delay_seconds: 5
+    pages:
+      - name: "Example public listing"
+        url: "REPLACE_WITH_PUBLIC_LISTING_URL"
+
+# ------------------------------------------------------------------
+# OUTPUT
+# ------------------------------------------------------------------
+output:
+  csv_path: "output/leads.csv"
+  # De-dupe against previously seen tenders so you only get NEW ones.
+  seen_db: "output/seen.json"
